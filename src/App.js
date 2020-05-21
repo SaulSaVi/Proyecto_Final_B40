@@ -29,14 +29,14 @@ function App() {
   // const URL = 'https://api.giphy.com/v1/gifs/search?api_key=ttAm40hnMkgbyQpH8pziLa1cC6Dm5l6a&q=';
   const [search, setSearch] = useState('love'); // La palabra por defecto sera rugrats al cargar la pagina
   const [gifs, setGifs] = useState([]);
-  const URL = `http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=a3baf3f68415f9e146751276a90005f7&artist=kygo&track=${search}&format=json`;
+  const URL = `http://ws.audioscrobbler.com/2.0/?method=track.search&track=${search}&api_key=a3baf3f68415f9e146751276a90005f7&format=json`;
   useEffect(() => {
     console.log('Desde use effect')
     console.log(search)
 
     axios.get(URL).then((response) => {
       // En la siguiente liena de codigo se guarda 
-      setGifs(response.data) // primer data es de axios, segundo data es de respuesta de giphy
+      setGifs(response.data.results.trackmatches.track) // primer data es de axios, segundo data es de respuesta de giphy
     }).catch((error) => {
       console.log(error)
     })
@@ -47,8 +47,8 @@ function App() {
     axios.get(URL).then((response) => {
       // En la siguiente liena de codigo se guarda 
       console.log('response data: ',response.data)
-      console.log('response name: ',response.data.track.name)
-      setGifs(response.data.data) // primer data es de axios, segundo data es de respuesta de giphy
+      console.log('response name: ',response.data.results.trackmatches.track)
+      setGifs(response.data.results.trackmatches.track) // primer data es de axios, segundo data es de respuesta de giphy
     }).catch((error) => {
       console.log(error)
     }) 
@@ -102,7 +102,7 @@ function App() {
 
                 <div className="col-12 col-sm-12 col-md-4 col-lg-4">
                   <div className="card bg-dark text-white">
-                      <h5 className="card-title">{gif}</h5>
+                      <h5 className="card-title">{gif.artist+" - "+gif.name}</h5>
                   </div>
                 </div>
               )
