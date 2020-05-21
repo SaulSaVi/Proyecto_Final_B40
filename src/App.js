@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import navbar from './navbar';
 import './App.css';
 import axios from 'axios';
+
 
 function App() {
 
@@ -57,6 +59,7 @@ function App() {
 
   return (
     <div className="App">
+      <navbar/>
       {/* REGISTRO */}
       <div className="container">
         <div className="row">
