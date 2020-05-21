@@ -2,21 +2,21 @@ import React, { useState, useEffect } from 'react';
 import navbar from './navbar';
 import './App.css';
 import axios from 'axios';
+// import Playlist from './Playlist';
 
 
 function App() {
 
+  // R E G I S T R O
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const createUser = (event) => {
     event.preventDefault();
-    // FIREBASE NAT
-    // axios.post('https://proyectofinalb40.firebaseio.com/users.json', 
     // FIREBASE GRECIA
-    axios.post('https://playlist-app-918cf.firebaseio.com/users.json', 
+    // axios.post('https://playlist-app-918cf.firebaseio.com/users.json', 
 
-    //// key:value,key:value,key:value,
+    // FIREBASE NAT
+    axios.post('https://proyectofinalb40.firebaseio.com/users.json', 
     {email, password}).then((response) => {
       console.log(response.status)
       alert('Tu usuario se ha registrado');
@@ -27,30 +27,79 @@ function App() {
   }
 
 
-  // search
-  // const URL = 'https://api.giphy.com/v1/gifs/search?api_key=ttAm40hnMkgbyQpH8pziLa1cC6Dm5l6a&q=';
-  const [search, setSearch] = useState('love'); // La palabra por defecto sera rugrats al cargar la pagina
-  const [gifs, setGifs] = useState([]);
-  const URL = `http://ws.audioscrobbler.com/2.0/?method=track.search&track=${search}&api_key=a3baf3f68415f9e146751276a90005f7&format=json`;
-  useEffect(() => {
-    console.log('Desde use effect')
-    console.log(search)
+  // P L A Y L I S T
+  const [playlistExist,setPlaylistExist] = useState([])
 
-    axios.get(URL).then((response) => {
-      // En la siguiente liena de codigo se guarda 
-      setGifs(response.data.results.trackmatches.track) // primer data es de axios, segundo data es de respuesta de giphy
+  useEffect(() => {
+    axios.get('https://proyectofinalb40.firebaseio.com/playlists.json')
+      .then((response) => {
+        // console.log(response.data) //Esto me trajo firebase
+
+        const playlists = Object.entries(response.data).reverse()
+        // console.log(playlists)
+        const realData = playlists.map((todo) => {
+            const [id,data] = todo; 
+            return {
+                id,
+                ...data
+            }
+        } )
+        // console.log(realData)
+        const playlistE = realData
+        setPlaylistExist(playlistE)
+
+    }).catch((error) => {
+        console.log(error)
+    })
+  }, [])
+
+
+  // C r e a r   l a   P l a y l i s t
+  const [playlist, setPlaylist] = useState('');
+
+  const clear = () => {
+    console.log('aqui se deberia limpiar todooo')
+    setPlaylist('')
+  } 
+
+  const createPlaylist = (event) => {
+    event.preventDefault();
+
+    axios.post('https://proyectofinalb40.firebaseio.com/playlists.json',
+    {playlist}).then((response) => {
+      // console.log(response.status)
+      alert('Tu playlist se a agregado correctamente');
+      clear();
+    }).catch((error) => {
+      alert('Hubo un problema al crear tu playlist');
+    })
+  }
+
+
+
+
+
+
+
+
+
+  // S E A R C H
+  const [search, setSearch] = useState('love');
+  const [gifs, setGifs] = useState([]);
+  const URLSearch = `http://ws.audioscrobbler.com/2.0/?method=track.search&track=${search}&api_key=a3baf3f68415f9e146751276a90005f7&format=json`;
+  useEffect(() => {
+    // console.log(search)
+    axios.get(URLSearch).then((response) => {
+      setGifs(response.data.results.trackmatches.track)
     }).catch((error) => {
       console.log(error)
     })
-  },[])
+  }, [])
 
   const findGiphy = (event) => {
-    event.preventDefault()  //Evita que se refresque la pagina al momento de hacer submit en el form
-    axios.get(URL).then((response) => {
-      // En la siguiente liena de codigo se guarda 
-      console.log('response data: ',response.data)
-      console.log('response name: ',response.data.results.trackmatches.track)
-      setGifs(response.data.results.trackmatches.track) // primer data es de axios, segundo data es de respuesta de giphy
+    event.preventDefault()
+    axios.get(URLSearch).then((response) => {
+      setGifs(response.data.results.trackmatches.track)
     }).catch((error) => {
       console.log(error)
     }) 
@@ -59,8 +108,7 @@ function App() {
 
   return (
     <div className="App">
-      <navbar/>
-      {/* REGISTRO */}
+      {/* R E G I S T R O */}
       <div className="container">
         <div className="row">
           <div className="col-12 col-lg-8 col-md-8 col-sm-8">
@@ -82,7 +130,57 @@ function App() {
           </div>
         </div>
       </div>
-      {/* SEARCH */}
+      
+
+      {/* P L A Y L I S T */}
+      <div className="container">
+        <div className="row justify-content-center">  
+          <div className="col-12 col-lg-8 col-md-8 col-sm-8">
+            <h3>SI HAY  P L A Y L I S T</h3>
+          </div> 
+
+          { playlistExist.map((todo) => {
+              return(
+                <div className="col-12 col-sm-8 col-md-8 col-lg-8">
+                  <div className="">
+                    <div className="card-header">
+                      Playlist: {todo.playlist}
+                      {/* <button className="close" onClick={() => props.delete() }>
+                        <span>&times;</span>
+                      </button> */}
+                    </div>
+                    <div className="card-footer text-center">
+                      {/* <button onClick={() => props.edit() } className="btn btn-info">Editar</button> */}
+                    </div>
+                  </div>
+                </div>
+              )
+          }) }
+          
+        </div>
+
+        <div className="row">
+          <div className="col-12 col-lg-8 col-md-8 col-sm-8">
+            <h3>C R E A R   P L A Y L I S T</h3>
+          </div>
+
+          <div className="col-12 col-lg-8 col-md-8 col-sm-8">
+            <form action="" onSubmit={createPlaylist}>
+              <div className="form-group">
+                <label className="text-left flex" htmlFor="">Name playlist:</label>
+                <input type="text" className="form-control" name="playlist" placeholder="Name of playlist" required
+                  value={playlist} onChange={(event) => setPlaylist(event.target.value)}
+                />
+              </div>
+              <button type="submit" className="btn btn-info">Guardar Playlist</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+
+      
+      {/* S E A R C H */}
       <div className="container">
         SEARCH
         <div className="container my-5">
@@ -105,7 +203,8 @@ function App() {
 
                 <div className="col-12 col-sm-12 col-md-4 col-lg-4">
                   <div className="card bg-dark text-white">
-                      <h5 className="card-title">{gif.artist+" - "+gif.name}</h5>
+                      <h5 className="card-title">{gif.name}</h5>
+                      <h5 className="card-title">{gif.artist}</h5>
                   </div>
                 </div>
               )
@@ -116,8 +215,6 @@ function App() {
               )
             }
           </div>
-
-          {/* <h5 className="card-title">{gifs}</h5> */}
         </div>
       </div>
     </div>
