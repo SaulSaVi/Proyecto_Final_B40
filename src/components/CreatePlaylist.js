@@ -27,12 +27,52 @@ function CreatePlaylist(props) {
   }
 
   return (
-    <div className="playlists">
-      <div className="container">
-        <div className="container">
-          <div className="row justify-content-center ">
+    <div className="container-fluid">
+      <div className="row ">
+        <div className="col-2 sf-gray-primary">
+          <ul className="list-group">
+            <li className="list-group-item sf-list-group-item">
+              <div className="spotifyname" >Spotify<span className="spotifyxname">X</span></div>
+            </li>
+            <li className="list-group-item sf-list-group-item">
+              <span className="fa fa-home"></span>
+              Inicio
+            </li>
+            <li className="list-group-item sf-list-group-item">
+              <span className="fa fa-search"></span>
+              Explorar
+            </li>
+            <li className="list-group-item sf-list-group-item">
+              <a href="/create-playlist">
+                <i class="fa fa-plus"></i>
+                Crear nueva playlist
+              </a>
+            </li>
+            <li className="list-group-item sf-list-group-item">
+              <a href="/playlists">
+                <i class="fa fa-eye"></i>
+                Ver tus playlists
+              </a>
+            </li>
+          </ul>
+
+          <label>PLAYLISTS</label>
+          <ul className="list-group">
+            <li className="list-group-item sf-list-group-item">Tus me gusta</li>
+          </ul>
+          <br /><br />
+        </div>
+        <div className="col-8 sf-playlist">
+          <br />
+          
+          <div className="row">
+            <div className="col-6">
+              <h3 className="title">Tus playlist</h3>
+            </div>
+          </div>
+
+          <div className="row justify-content mt-5">
             <div className="col-12 col-lg-8 col-md-8 col-sm-8 mb-5">
-              <h3 className="mt-5 text-center">Crear nueva playlist</h3>
               <form action="" onSubmit={createPlaylist}>
                 <div className="form-group">
                   <label className="text-left flex" htmlFor="">Nombre de la playlist</label>
@@ -43,13 +83,19 @@ function CreatePlaylist(props) {
                 <button type="submit" className="btn btn-info">Crear</button>
               </form>
             </div>
-            <div className="col-12 col-lg-8 col-md-8 col-sm-8">
-              <a href="playlists">Ver todas tus playlists</a>
-            </div>
+
+          </div>          
+
+        </div>
+        <div className="col-2 sf-gray-primary">
+          <div className="similar" >
+            <h5 className="title">Artistas Similares</h5><br />
           </div>
         </div>
       </div>
     </div>
+
+
   )
 }
 
