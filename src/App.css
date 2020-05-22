@@ -59,6 +59,7 @@ body{
 
 .sf-gray-primary{
   background-color: #121212;
+  min-height: 100vh;
 }
 
 .similar{
@@ -121,6 +122,14 @@ body{
 .sf-list-group-item{
   background-color: #121212;
   color: white;  
+}
+
+.sf-list-group-item a {
+  color: white;  
+}
+
+.sf-list-group-item a:hover {
+  text-decoration: none;
 }
 
 .sf-list-group-item:hover{
