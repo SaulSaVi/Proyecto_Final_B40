@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import '../App.css';
 import axios from 'axios';
+import Sidebar from './Sidebar';
+import Aside from './Aside';
 
 function Home() {
 
@@ -29,37 +31,10 @@ function Home() {
   return (
     <div className="container-fluid">
       <div className="row ">
-        <div className="col-2 sf-gray-primary">
-          <ul className="list-group">
-            <li className="list-group-item sf-list-group-item">
-              <div className="spotifyname" >Spotify<span className="spotifyxname">X</span></div>
-            </li>
-            <li className="list-group-item sf-list-group-item">
-              <span className="fa fa-home"></span>
-              Inicio
-            </li>
-            <li className="list-group-item sf-list-group-item">
-              <span className="fa fa-search"></span>
-              Explorar
-            </li>
-            <li className="list-group-item sf-list-group-item">
-              <a href="/create-playlist">
-                <i class="fa fa-plus"></i>
-                Crear nueva playlist
-              </a>
-            </li>
-          </ul>
+        <Sidebar/>
 
-          <label>PLAYLISTS</label>
-          <ul className="list-group">
-            <li className="list-group-item sf-list-group-item">Tus me gusta</li>
-
-          </ul>
-          <br /><br />
-        </div>
         <div className="col-8 sf-playlist">
-          <br />
-          <div className="row justify-content-between">
+          <div className="row justify-content-between mt-4 mb-4">
             <div className="col-2">
               <div className="row justify-content-center">
                 <div className="col-12 col-sm-8 col-lg-8">
@@ -81,26 +56,18 @@ function Home() {
               </div>
             </div>
           </div>
-          <br />
-          <div className="row">
-            <div className="col-6">
+          
+          <div className="row mb-4">
+            <div className="col-12">
               <h4 className="title">Resultados de {`"${search}"`}</h4>
             </div>
           </div>
-          <br />
-
-          <div className="row">
-            <div className="col-12">
-              <a href="#" className="sf-link">GENERAL</a>
-            </div>
-          </div>
-
-          <br />
+         
           <div className="row">
             {gifs.length > 0 ? gifs.map((gif) => {
               return (
 
-                <div className="col-12">
+                <div className="col-12 pl-0 pr-0">
                   <table className="table">
                     <tbody>
                       <tr>
@@ -119,11 +86,8 @@ function Home() {
             }
           </div>
         </div>
-        <div className="col-2 sf-gray-primary">
-          <div className="similar" >
-            <h5 className="title">Artistas Similares</h5><br />
-          </div>
-        </div>
+        
+        <Aside />
       </div>
     </div>
   )

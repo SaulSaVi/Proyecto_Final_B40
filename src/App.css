@@ -51,7 +51,6 @@ body{
 
 .similar{
   text-align: center;
-  margin-top: 30%;
 }
 
 .sf-gray-secondary{
@@ -60,6 +59,10 @@ body{
 
 .sf-playlist{
   background-color: #171717;
+}
+
+.sf-playlist table {
+  margin-bottom: 0;
 }
 
 .sf-dropdown{
@@ -207,3 +210,49 @@ tr:hover{
 }
 
 /*holis*/
+
+
+.card.playlist{
+  width: 100%;
+  margin-bottom: 0;
+  color: #212529;
+  background-color: transparent;
+  color: white;
+  border-color: #272727 !important;
+  border-radius: 0;
+  border-left: 0;
+  border-right: 0;
+  border-top: 1px solid #dee2e6;
+  border-bottom: 0;
+
+}
+
+.card.playlist:last-child {
+  border-bottom: 1px solid #dee2e6;
+}
+
+button.close {
+  color: white;
+}
+
+.close:not(:disabled):not(.disabled):focus, .close:not(:disabled):not(.disabled):hover {
+  outline: none;
+  color: #00c458;
+}
+
+.btn.btn-info {
+  min-width: 100px;
+  border-radius: 25px;
+  border: 0;
+  background: -webkit-linear-gradient(#00c458, #00c458);
+}
+
+.btn.btn-info:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.form-control.create {
+  border-radius: 25px;
+  border: 0;
+}
