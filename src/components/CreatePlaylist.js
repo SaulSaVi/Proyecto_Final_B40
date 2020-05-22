@@ -66,13 +66,13 @@ function CreatePlaylist(props) {
           <br />
           
           <div className="row">
-            <div className="col-12 col-lg-8 col-md-8 col-sm-8 mb-5">
+            <div className="col-12 col-lg-12 col-md-12 col-sm-12 mb-5">
               <h3 className="title">Crear playlist</h3>
             </div>
           </div>
 
           <div className="row justify-content mt-5">
-            <div className="col-12 col-lg-8 col-md-8 col-sm-8 mb-5">
+            <div className="col-12 col-lg-12 col-md-12 col-sm-12 mb-5">
               <form action="" onSubmit={createPlaylist}>
                 <div className="form-group">
                   <label className="text-left flex" htmlFor="">Nombre de la playlist</label>
