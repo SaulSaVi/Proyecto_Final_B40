@@ -6,8 +6,10 @@ function Home() {
 
   const [search, setSearch] = useState('love');
   const [gifs, setGifs] = useState([]);
-  const [similar, getSimilar] = useState([]);
+  const [similar, setSimilar] = useState([]);
   const URLSearch = `http://ws.audioscrobbler.com/2.0/?method=track.search&track=${search}&api_key=a3baf3f68415f9e146751276a90005f7&format=json`;
+  const urlSimilar = `http://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist=${search}&api_key=a3baf3f68415f9e146751276a90005f7&format=json`;
+
   useEffect(() => {
     // console.log(search)
     axios.get(URLSearch).then((response) => {
@@ -15,16 +17,26 @@ function Home() {
     }).catch((error) => {
       console.log(error)
     })
-  }, [])
+  },[])
+
+  useEffect(() => {
+    axios.get(urlSimilar).then((response) => {
+        setSimilar(response.data.similarartists.artist);
+    }).catch((error) => {
+        console.log(error);
+    })
+  })
+ 
 
   const findGiphy = (event) => {
     event.preventDefault()
     axios.get(URLSearch).then((response) => {
       setGifs(response.data.results.trackmatches.track)
     }).catch((error) => {
-      console.log(error)
+      console.log(error);
     }) 
   }
+
 
     return (
         <div className="container-fluid">
@@ -110,7 +122,7 @@ function Home() {
                                             <table className="table">
                                                 <tbody> 
                                                     <tr>
-                                                        <td><i class="fa fa-plus"></i></td>
+                                                        <button class="btn"><i class="fa fa-plus"></i></button>    
                                                         <td> {`${gif.artist} - ${gif.name}`} </td>
                                                     </tr>
                                                 </tbody>
@@ -127,7 +139,20 @@ function Home() {
                 </div>
                 <div className="col-2 sf-gray-primary">
                     <div className="similar" >
-                        <h5 className="title">Artistas Similares</h5><br/>
+                        <h5 className="title">Artistas similares</h5><br/>
+                        {
+                            similar.map((tops) => {
+                                return(
+                                    <table className="table">
+                                        <tbody> 
+                                            <tr>
+                                                <td> {`${tops.name}`} </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                )
+                            })
+                        }
                     </div>
                 </div>
             </div>
