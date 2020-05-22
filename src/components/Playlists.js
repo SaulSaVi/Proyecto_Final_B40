@@ -21,21 +21,24 @@ function Playlists() {
         })
         // console.log(realData)
         const playlistE = realData
+        console.log(playlistE)
         setPlaylistExist(playlistE)
       }).catch((error) => {
         console.log(error)
       })
   }, [])
 
-  const deletePlaylist = () => {
+  const deletePlaylist = (playlistE) => {
     // Hard Delete - Borrar todo de la base de datos
     // Soft Delete - para el usuario parece que esta elimindao, pero dentro de la base de datos NO
-    axios.delete(`https://proyectofinalb40.firebaseio.com/playlists.json`)
-    .then(() => {
-      // props.close(false)
-      // console.log(response.data)
-      console.log('se elimina playlist')
-      }).catch((error) => alert(error))
+    console.log('se elimina playlist')
+    console.log(playlistE)
+    // axios.delete(`https://proyectofinalb40.firebaseio.com/playlists/${playlistE.id}.json`)
+    // .then(() => {
+    //   // props.close(false)
+    //   // console.log(response.data)
+    //   console.log('se elimina')
+    //   }).catch((error) => alert(error))
   }
 
 
@@ -51,9 +54,9 @@ function Playlists() {
               return (
                 <div className="col-12 col-sm-3 col-md-3 col-lg-3 mb-5">
                   <div className="card text-center">
-                    <div className="card-header">
-                      <h5 className="card-title">{todo.playlist}</h5>
-                      <button className="close" onClick={deletePlaylist}>
+                    <div className="card-header d-flex align-items-center justify-content-between">
+                      <h5 className="card-title mb-0">{todo.playlist}</h5>
+                      <button className="close" onClick={() => deletePlaylist() } >
                         <span>&times;</span>
                       </button>
                     </div>
@@ -70,7 +73,7 @@ function Playlists() {
               </div>
             )}
 
-            <div className="col-12 col-lg-8 col-md-8 col-sm-8">
+            <div className="col-12 col-lg-12 col-md-12 col-sm-12">
               <a href="create-playlist">Crear nueva playlist</a>
             </div>
 

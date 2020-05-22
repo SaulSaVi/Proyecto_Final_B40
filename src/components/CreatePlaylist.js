@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../App.css';
 import axios from 'axios';
 
-function CreatePlaylist() {
+function CreatePlaylist(props) {
 
   // C r e a r   l a   P l a y l i s t
   const [playlist, setPlaylist] = useState('');
@@ -12,18 +12,6 @@ function CreatePlaylist() {
     setPlaylist('')
   }
 
-  const deletePlaylist = () => {
-    // Hard Delete - Borrar todo de la base de datos
-    // Soft Delete - para el usuario parece que esta elimindao, pero dentro de la base de datos NO
-    axios.delete(`https://proyectofinalb40.firebaseio.com/playlists.json`)
-    .then(() => {
-      // props.close(false)
-      // console.log(response.data)
-      console.log('se elimina playlist')
-      }).catch((error) => alert(error))
-  }
-
-
   const createPlaylist = (event) => {
     event.preventDefault();
 
@@ -32,6 +20,7 @@ function CreatePlaylist() {
         // console.log(response.status)
         alert('Tu playlist se a agregado correctamente');
         clear();
+        props.history.push('/playlists')
       }).catch((error) => {
         alert('Hubo un problema al crear tu playlist');
       })
