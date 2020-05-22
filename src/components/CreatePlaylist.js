@@ -66,8 +66,8 @@ function CreatePlaylist(props) {
           <br />
           
           <div className="row">
-            <div className="col-6">
-              <h3 className="title">Tus playlist</h3>
+            <div className="col-12 col-lg-8 col-md-8 col-sm-8 mb-5">
+              <h3 className="title">Crear playlist</h3>
             </div>
           </div>
 

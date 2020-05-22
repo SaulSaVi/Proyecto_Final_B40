@@ -102,7 +102,7 @@ function Playlists() {
               )
             }) : (
               <div className="col-12 col-lg-12 col-md-12 col-sm-12">
-                <h3 className="mt-5 text-center">No hay playlists</h3>
+                <h3 className="mt-5 title text-center">No tienes playlists</h3>
               </div>
             )}
           </div>          
