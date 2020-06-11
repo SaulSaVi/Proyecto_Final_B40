@@ -47,11 +47,11 @@ function Home() {
             <div className="col-2">
               <div className="dropdown">
                 <button className="btn dropdown-toggle sf-dropdown" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  user name
+                  Log in: Usuario
                 </button>
                 <div className="dropdown-menu sf-dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a className="dropdown-item sf-dropdown-item" href="#"></a>
-                  <a className="dropdown-item sf-dropdown-item" href="#"></a>
+                  <a className="dropdown-item sf-dropdown-item" href="#">Nuevo usuario</a>
+                  <a className="dropdown-item sf-dropdown-item" href="#">Ingresar</a>
                 </div>
               </div>
             </div>

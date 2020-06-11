@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import navbar from './navbar';
 import './App.css';
 import axios from 'axios';
 // import Playlist from './Playlist';
+
 
 function App() {
 
