@@ -41,6 +41,53 @@ function Home() {
     })
   })
 
+
+
+  // playlist
+  const [playlistExist, setPlaylistExist] = useState([])
+  const [isDeleted, setIsDeleted] = useState(true)
+  const [playlist, setPlaylist] = useState()
+
+  useEffect(() => {
+    axios.get('https://proyectofinalb40.firebaseio.com/playlists.json')
+      .then((response) => {
+        if (response.data) {
+          const playlists = Object.entries(response.data)
+
+          const realData = playlists.map((playlist) => {
+            const [id, data] = playlist;
+            return {
+              id,
+              ...data
+            }
+          })
+        
+          const playlistE = realData
+        
+          setPlaylistExist(playlistE)
+        } else {
+          setPlaylistExist([])
+        }
+        
+      }).catch((error) => {
+        console.log(error)
+      })
+  }, [isDeleted])
+
+  const deletePlaylist = (id) => {
+    console.log('se elimina playlist')
+
+    axios.delete(`https://proyectofinalb40.firebaseio.com/playlists/${id}.json`)
+    .then(() => {
+      setIsDeleted(!isDeleted);      
+    }).catch((error) => console.log(error))
+  }
+   // playlist   end
+
+  // ELIMINAR AL FINAL 
+  const [prioridad, setPrioridad] = useState('');
+  // ELIMINAR AL FINAL
+
   return (
     <div className="container-fluid">
       <div className="row ">
@@ -58,7 +105,7 @@ function Home() {
               </div>
             </div>
             
-            <div className="col-2">
+            {/* <div className="col-2">
               <div className="dropdown">
                 <button className="btn dropdown-toggle sf-dropdown" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Log in: Usuario
@@ -68,7 +115,41 @@ function Home() {
                   <a className="dropdown-item sf-dropdown-item" href="#">Ingresar</a>
                 </div>
               </div>
+            </div> */}
+
+
+            {/* ELIMINAR AL FINAL  */}
+            <div className="col-12 sf-playlist">
+              <div className="row justify-content mt-5">
+                {
+                  playlistExist.length > 0 && (
+                    <h4 className="title">Tus playlist</h4>
+                  )
+                }
+                { playlistExist.length > 0 ? playlistExist.map((playlist) => {
+                  return (
+                    <div className="col-12 col-sm-3 col-md-3 col-lg-3 mb-5">
+                      <div className="card text-center">
+                        <div className="card-header d-flex align-items-center justify-content-between">
+                          <h5 className="card-title mb-0">{`${playlist.playlist}`}</h5>
+                          <button className="close" onClick={(() => { deletePlaylist(playlist.id) })}>
+                            <span>&times;</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                }) : (
+                  <div className="col-12 col-lg-12 col-md-12 col-sm-12">
+                    <h3 className="mt-5 title text-center">No tienes playlists</h3>
+                  </div>
+                )}
+              </div>          
             </div>
+            {/* ELIMINAR AL FINAL  */}
+
+
+
           </div>
           
           <div className="row mb-4">
@@ -85,7 +166,27 @@ function Home() {
                   <table className="table">
                     <tbody>
                       <tr>
-                        <td><i class="fa fa-plus"></i></td>
+
+                        {/* ELIMINAR AL FINAL */}
+                        <div className="form-group">
+                          <label htmlFor="">add playlist</label>
+                          <select onChange={ (event) => setPrioridad(event.target.value) } name="prioridad" id="" className="form-control" value="Selecciona" >
+                                  { playlistExist.length > 0 ? playlistExist.map((playlist) => {
+                                  return (
+                                      <option value={`${playlist.playlist}: ${gif.artist} - ${gif.name}`} > {`${playlist.playlist}`} </option>
+                                  )
+                                  }) : (
+                                  <div className="col-12 col-lg-12 col-md-12 col-sm-12">
+                                      <h3 className="mt-5 title text-center">No tienes playlists</h3>
+                                  </div>
+                                )}
+                          </select>
+                        </div>
+                        {/* eliminar al final end */}
+
+
+
+                        {/* <td><i class="fa fa-plus"></i></td> */}
                         <td> {`${gif.artist} - ${gif.name}`} </td>
                       </tr>
                     </tbody>
