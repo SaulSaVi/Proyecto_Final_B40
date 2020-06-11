@@ -8,8 +8,12 @@ function Home() {
 
   const [search, setSearch] = useState('love');
   const [gifs, setGifs] = useState([]);
-  const [similar, getSimilar] = useState([]);
   const URLSearch = `http://ws.audioscrobbler.com/2.0/?method=track.search&track=${search}&api_key=a3baf3f68415f9e146751276a90005f7&format=json`;
+  
+  // Artistas similares
+  const [similar, setSimilar] = useState([]);
+  const urlSimilar = `http://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist=${search}&api_key=a3baf3f68415f9e146751276a90005f7&format=json`;
+
   useEffect(() => {
     // console.log(search)
     axios.get(URLSearch).then((response) => {
@@ -28,6 +32,15 @@ function Home() {
     })
   }
 
+  // Artistas similares
+  useEffect(() => {
+    axios.get(urlSimilar).then((response) => {
+        setSimilar(response.data.similarartists.artist);
+    }).catch((error) => {
+        console.log(error);
+    })
+  })
+
   return (
     <div className="container-fluid">
       <div className="row ">
@@ -44,6 +57,7 @@ function Home() {
                 </div>
               </div>
             </div>
+            
             <div className="col-2">
               <div className="dropdown">
                 <button className="btn dropdown-toggle sf-dropdown" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -87,7 +101,26 @@ function Home() {
           </div>
         </div>
         
-        <Aside />
+        {/* <Aside /> */}
+        <div className="col-2 sf-gray-primary">
+          <div className="similar" >
+            <h5 className="title">Artistas Similares</h5><br />
+            {
+            similar.map((similar) => {
+                return(
+                    <table className="table">
+                        <tbody>
+                            <tr>
+                                <td> {`${similar.name}`} </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                )
+            })
+          }
+          </div>
+        </div>
+
       </div>
     </div>
   )
